@@ -25,14 +25,22 @@
                 <span asp-validation-for="Tickets.TicketDecription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tickets.TicketCategory" class="control-label"></label>
-                <input asp-for="Tickets.TicketCategory" class="form-control" />
+                <label class="control-label">Ticket Type</label>
+                <select asp-for="Tickets.TicketCategory" asp-items="@Model.TicketType" class="form-control">
+                    
+                </select>
                 <span asp-validation-for="Tickets.TicketCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tickets.TicketOwner" class="control-label"></label>
                 <input asp-for="Tickets.TicketOwner" class="form-control" />
                 <span asp-validation-for="Tickets.TicketOwner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label d-block"> Ticket Activity</label>
+                <select asp-for="Tickets.TicketActivity" asp-items="@Model.Activities" class="form-control">                    
+                </select>
+                    <span asp-validation-for="Tickets.TicketActivity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

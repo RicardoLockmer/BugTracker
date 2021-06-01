@@ -22,6 +22,10 @@ namespace BugTracker.Pages.TicketDashboard
 
         [BindProperty]
         public Tickets Tickets { get; set; }
+        public List<SelectListItem> Activities { get; set; }
+        public List<SelectListItem> TicketType { get; set; }
+
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,7 +33,25 @@ namespace BugTracker.Pages.TicketDashboard
             {
                 return NotFound();
             }
-
+            TicketType = new List<SelectListItem>()
+            {
+                new SelectListItem() { Value = "Bug", Text = "Bug"},
+                new SelectListItem() { Value = "Feature", Text = "Feature"},
+                new SelectListItem() { Value = "Question", Text = "Question"},
+                new SelectListItem() { Value = "Technical Issue", Text = "Technical Issue"},
+                new SelectListItem() { Value = "Remove", Text = "Remove"},
+                new SelectListItem() { Value = "Fix", Text = "Fix"},
+                new SelectListItem() { Value = "Change", Text = "Change"},
+                new SelectListItem() { Value = "Design", Text = "Design"}
+            };
+            Activities = new List<SelectListItem>()
+            {
+                new SelectListItem() {Value = "1", Text = "Open Ticket"},
+                new SelectListItem() {Value = "2", Text = "In Progress"},
+                new SelectListItem() {Value = "3", Text = "Complete"}
+            };
+            
+            
             Tickets = await _context.Tickets.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Tickets == null)

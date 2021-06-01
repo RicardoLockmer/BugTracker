@@ -18,9 +18,21 @@ namespace BugTracker.Pages.TicketDashboard
         {
             _context = context;
         }
+        public List<SelectListItem> TicketType { get; set; }
 
         public IActionResult OnGet()
         {
+            TicketType = new List<SelectListItem>()
+            {
+                new SelectListItem() { Value = "Bug", Text = "Bug"},
+                new SelectListItem() { Value = "Feature", Text = "Feature"},
+                new SelectListItem() { Value = "Question", Text = "Question"},
+                new SelectListItem() { Value = "Technical Issue", Text = "Technical Issue"},
+                new SelectListItem() { Value = "Remove", Text = "Remove"},
+                new SelectListItem() { Value = "Fix", Text = "Fix"},
+                new SelectListItem() { Value = "Change", Text = "Change"},
+                new SelectListItem() { Value = "Design", Text = "Design"} 
+            };
             return Page();
         }
 
@@ -34,7 +46,7 @@ namespace BugTracker.Pages.TicketDashboard
             {
                 return Page();
             }
-
+            Tickets.TicketActivity = 1;
             _context.Tickets.Add(Tickets);
             await _context.SaveChangesAsync();
 

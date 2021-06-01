@@ -25,7 +25,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Tickets.TicketCategory" class="control-label"></label>
-                <input asp-for="Tickets.TicketCategory" class="form-control" />
+                <select asp-for="Tickets.TicketCategory" asp-items="@Model.TicketType" class="form-control">
+                    <option selected disabled>Select Ticket Type</option>
+                </select>
                 <span asp-validation-for="Tickets.TicketCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
