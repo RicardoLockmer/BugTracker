@@ -1,0 +1,49 @@
+﻿@page
+@model BugTracker.Pages.TicketDashboard.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tickets</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tickets.TicketName" class="control-label"></label>
+                <input asp-for="Tickets.TicketName" class="form-control" />
+                <span asp-validation-for="Tickets.TicketName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tickets.TicketDecription" class="control-label"></label>
+                <input asp-for="Tickets.TicketDecription" class="form-control" />
+                <span asp-validation-for="Tickets.TicketDecription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tickets.TicketCategory" class="control-label"></label>
+                <input asp-for="Tickets.TicketCategory" class="form-control" />
+                <span asp-validation-for="Tickets.TicketCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tickets.TicketOwner" class="control-label"></label>
+                <input asp-for="Tickets.TicketOwner" class="form-control" />
+                <span asp-validation-for="Tickets.TicketOwner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

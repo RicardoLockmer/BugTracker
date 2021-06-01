@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BugTracker.Models;
 
 namespace BugTracker.Data
 {
@@ -12,5 +13,6 @@ namespace BugTracker.Data
             : base(options)
         {
         }
+        public DbSet<BugTracker.Models.Tickets> Tickets { get; set; }
     }
 }
