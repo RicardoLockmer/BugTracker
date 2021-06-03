@@ -69,7 +69,7 @@ namespace BugTracker.Pages.TicketDashboard
             {
                 return Page();
             }
-
+            
             _context.Attach(Tickets).State = EntityState.Modified;
 
             try

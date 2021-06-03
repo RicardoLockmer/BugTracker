@@ -20,7 +20,7 @@
                 <div class="card-header bg-warning">
                     <p class="font-weight-bold text-white m-0">Open Tickets</p>
                 </div>
-                <div class="card-body bg-light">
+                <div class="card-body bg-light shadow-lg">
                     @foreach (var item in Model.Tickets)
                     {
                         @if(item.TicketActivity == 1)
@@ -49,7 +49,14 @@
                                         @Html.DisplayFor(modelItem => item.TicketOwner)
                                     </span>
                                 </div>
-
+                                <div>
+                                    <form method="POST">
+                                        <input type="hidden" asp-for="TicketActivity" value="2" />
+                                        <input type="hidden" asp-for="TicketID" value="@item.ID" />
+                                        <button type="submit">In Progress</button>
+                                    </form>
+                                    <input class="btn btn-sm btn-warning font-weight-bold text-white shadow-sm" type="submit" @*onclick="AddInProgress(@item.ID)"*@ value="In Progress" />
+                                </div>
                                 <div>
                                     <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                                     <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
@@ -161,6 +168,25 @@
             </div>
         </div>
     </div>
+    @*<script>
+        function AddInProgress(id) {
+            event.preventDefault();
+            $.ajax({
+                url: "/TicketDashboard/Edit?id=" + id,
+                type: "POST",
+                data: {activity: 2},
+                success: function () {
+                    alert("success");
+                },
+                complete: function () {
+                    alert("complete")
+                },
+                failure: function () {
+                    alert("failure");
+                }
+            });
+        }
 
+    </script>*@
 </div>
   
