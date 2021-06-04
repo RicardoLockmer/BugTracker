@@ -25,20 +25,28 @@ namespace BugTracker.Pages.TicketDashboard
         public Tickets ChangingTicket { get; set; }
         [BindProperty]
         public int TicketActivity { get; set; }
-        public void OnGet()
-        {
-            Tickets = _context.Tickets.ToList();
-        }
-       public async Task<IActionResult> OnPostAsync()
+
+        public async Task OnGetAsync()
         {
 
+            Tickets = await _context.Tickets.OrderBy(t => t.TicketName).ToListAsync();
+            
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+
+            await ChangeTicketActivity();
+            return Page();
+
+        }
+
+        private async Task ChangeTicketActivity()
+        {
             ChangingTicket = await _context.Tickets.FindAsync(TicketID);
             ChangingTicket.TicketActivity = TicketActivity;
             _context.SaveChanges();
             Tickets = _context.Tickets.ToList();
-            return Page();
-
-           
         }
     }
 }
