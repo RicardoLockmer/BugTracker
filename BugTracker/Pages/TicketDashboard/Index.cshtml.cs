@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
 
+
+
 namespace BugTracker.Pages.TicketDashboard
 {
     public class IndexModel : PageModel
@@ -20,9 +22,7 @@ namespace BugTracker.Pages.TicketDashboard
         }
 
         public IList<Tickets> Tickets { get; set; }
-        [BindProperty]
-        public int TicketID { get; set; }
-        public Tickets ChangingTicket { get; set; }
+
         [BindProperty]
         public int TicketActivity { get; set; }
 
@@ -31,22 +31,32 @@ namespace BugTracker.Pages.TicketDashboard
 
             Tickets = await _context.Tickets.OrderBy(t => t.TicketName).ToListAsync();
             
+            
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        // GETS CALLED WITH AJAX TO UPDATE THE TICKET ACTIVITY WHEN DRAG AND DROPPED TO ANOTHER COLUMN
+        public async Task OnPostAsync(int id, string activity)
         {
 
-            await ChangeTicketActivity();
-            return Page();
+            var ChangingTicket = await _context.Tickets.FindAsync(id);
+            if (activity == "InProgress")
+            {
+                ChangingTicket.TicketActivity = 2;
+            }
+            if (activity == "OpenTicket")
+            {
+                ChangingTicket.TicketActivity = 1;
+            }
+            if (activity == "Complete")
+            {
+                ChangingTicket.TicketActivity = 3;
+            }
+
+            await _context.SaveChangesAsync();
 
         }
-
-        private async Task ChangeTicketActivity()
-        {
-            ChangingTicket = await _context.Tickets.FindAsync(TicketID);
-            ChangingTicket.TicketActivity = TicketActivity;
-            _context.SaveChanges();
-            Tickets = _context.Tickets.ToList();
-        }
+        
+        
+        
     }
 }

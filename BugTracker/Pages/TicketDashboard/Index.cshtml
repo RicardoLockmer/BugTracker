@@ -1,4 +1,4 @@
-﻿@page "Ticket"
+﻿@page
 @model BugTracker.Pages.TicketDashboard.IndexModel
 
 @{
@@ -16,58 +16,49 @@
 
         @* FIRST COLUMN / OPEN TICKET *@
         <div class="col">
-            <div id="OpenTicket" class="border rounded-top ">
+            <div class="border rounded-top ">
                 <div class="card-header bg-warning">
                     <p class="font-weight-bold text-white m-0">Open Tickets</p>
                 </div>
-                <div class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;">
+                <div id="OpenTicket" class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;" ondragover="dragOver(event)" ondrop="onDrop(event);">
                     @foreach (var item in Model.Tickets)
                     {
                         @if(item.TicketActivity == 1)
-                        {
-                            <div class="card mx-2 my-3 p-4 shadow-sm">
-                                <div>
-                                    <label class="font-weight-bold">
-                                        Ticket Title
-                                    </label>
-                                    <p class="text-secondary">
-                                        @Html.DisplayFor(modelItem => item.TicketName)
-                                    </p>
-                                </div>
-                                <div class="text-secondary d-flex align-items-center border-top pt-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
-                                        <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
-                                    </svg>
-                                    @Html.DisplayFor(modelItem => item.TicketCategory)
-                                </div>
+                        { 
+                             <form method="POST">
+                                <div class="card mx-2 my-3 p-4 shadow-sm" id="@item.ID" draggable="true" ondragstart="dragStart(event);" ondragend="dragEnd(event)">
+                                    <div>
+                                        <label class="font-weight-bold">
+                                            Ticket
+                                        </label>
+                                        <p class="text-secondary">
+                                            @Html.DisplayFor(modelItem => item.TicketName)
+                                        </p>
+                                    </div>                                
+                                    <div class="text-secondary d-flex align-items-center border-top pt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
+                                            <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
+                                        </svg>
+                                        @Html.DisplayFor(modelItem => item.TicketCategory)
+                                    </div>
 
-                                <div class="text-secondary">
-                                    <label>
-                                        Assigned to
-                                    </label>
-                                    <span>
-                                        @Html.DisplayFor(modelItem => item.TicketOwner)
-                                    </span>
+                                    <div class="text-secondary">
+                                        <label>
+                                            Assigned to
+                                        </label>
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.TicketOwner)
+                                        </span>
+                                    </div>
+                                
+                                  
+                                    <div>
+                                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                                    </div>
                                 </div>
-                                <label class="font-weight-bold m-0">Change </label>
-                                <div class="my-2 form-inline">
-                                    <form method="POST" class="d-flex">
-                                        <input type="hidden" asp-for="TicketActivity" value="2" />
-                                        <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                        <button type="submit" class="btn btn-sm btn-info text-white d-flex">In Progress</button>
-                                    </form>
-                                    <form method="POST" class="d-flex ml-2">
-                                        <input type="hidden" asp-for="TicketActivity" value="3" />
-                                        <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                        <button type="submit" class="btn btn-sm btn-success text-white d-flex">Complete</button>
-                                    </form>
-                                </div>
-                                <div>
-                                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                                </div>
-                            </div>
+                             </form>
                         }
                     }
 
@@ -77,58 +68,47 @@
 
         @* SECOND COLUMN / IN PROGRESS *@
         <div class="col">
-            <div id="InProgress" class="border rounded-top">
+            <div class="border rounded-top">
                 <div class="card-header bg-info">
                     <p class="font-weight-bold text-white m-0">In Progress</p>
                 </div>
-                <div class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;">
+                <div id="InProgress" class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;" ondragover="dragOver(event)" ondrop="onDrop(event);">
                     @foreach (var item in Model.Tickets)
                     {
-                        if(item.TicketActivity == 2)
+                        if (item.TicketActivity == 2)
                         {
-                            <div class="card mx-2 my-3 p-4 shadow-sm">
-                                <div>
-                                    <label class="font-weight-bold">
-                                        Ticket Title
-                                    </label>
-                                    <p class="text-secondary">
-                                        @Html.DisplayFor(modelItem => item.TicketName)
-                                    </p>
-                                </div>
-                                <label class="font-weight-bold m-0">Change </label>
-                                <div class="form-inline my-2">
-                                    <form method="POST" class="d-flex">
-                                        <input type="hidden" asp-for="TicketActivity" value="1" />
-                                        <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                        <button type="submit" class="btn btn-sm btn-warning text-white d-flex">Open Ticket</button>
-                                    </form>
-                                    <form method="POST" class="d-flex ml-2">
-                                        <input type="hidden" asp-for="TicketActivity" value="3" />
-                                        <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                        <button type="submit" class="btn btn-sm btn-success text-white d-flex">Complete</button>
-                                    </form>
-                                </div>
-                                <div class="text-secondary d-flex align-items-center border-top pt-2">                                    
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
-                                        <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
-                                    </svg>                                    
-                                    @Html.DisplayFor(modelItem => item.TicketCategory)
-                                </div>
+                            <form method="POST">
+                                <div class="card mx-2 my-3 p-4 shadow-sm" id="@item.ID" draggable="true" ondragstart="dragStart(event);" ondragend="dragEnd(event)">
+                                    <div>
+                                        <label class="font-weight-bold">
+                                            Ticket
+                                        </label>
+                                        <p class="text-secondary">
+                                            @Html.DisplayFor(modelItem => item.TicketName)
+                                        </p>
+                                    </div>
+                                    <div class="text-secondary d-flex align-items-center border-top pt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
+                                            <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
+                                        </svg>
+                                        @Html.DisplayFor(modelItem => item.TicketCategory)
+                                    </div>
 
-                                <div class="text-secondary">
-                                    <label>
-                                        Assigned to
-                                    </label>
-                                    <span>
-                                        @Html.DisplayFor(modelItem => item.TicketOwner)
-                                    </span>
+                                    <div class="text-secondary">
+                                        <label>
+                                            Assigned to
+                                        </label>
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.TicketOwner)
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                                    </div>
                                 </div>
-                                <div>
-                                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                                </div>
-                            </div>
+                            </form>
                         }
                      }
 
@@ -138,84 +118,124 @@
 
         @* THIRD COLUMN / COMPLETE *@
         <div class="col">
-            <div id="Complete" class="border rounded-top">
+            <div class="border rounded-top">
                 <div class="card-header bg-success">
                     <p class="font-weight-bold text-white m-0">Complete</p>
                 </div>
-                <div class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;">
+                <div id="Complete" class="card-body bg-light shadow-md vh-100" style="overflow: scroll; overflow-x:hidden;" ondragover="dragOver(event)" ondrop="onDrop(event);">
                     @foreach (var item in Model.Tickets)
                     {
-                        @if(item.TicketActivity == 3)
+                        @if (item.TicketActivity == 3)
                         {
-                    <div class="card mx-2 my-3 p-4 shadow-sm">
-                        <div>
-                            <label class="font-weight-bold">
-                                Ticket Title
-                            </label>
-                            <p class="text-secondary">
-                                @Html.DisplayFor(modelItem => item.TicketName)
-                            </p>
-                        </div>
-                        <div class="text-secondary d-flex align-items-center border-top pt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
-                                <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
-                            </svg>
-                            @Html.DisplayFor(modelItem => item.TicketCategory)
-                        </div>
+                            <form method="POST">
+                                <div class="card mx-2 my-3 p-4 shadow-sm" id="@item.ID" draggable="true" ondragstart="dragStart(event);" ondragend="dragEnd(event)">
+                                    <div>
+                                        <label class="font-weight-bold">
+                                            Ticket
+                                        </label>
+                                        <p class="text-secondary">
+                                            @Html.DisplayFor(modelItem => item.TicketName)
+                                        </p>
+                                    </div>
+                                    <div class="text-secondary d-flex align-items-center border-top pt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-bug" viewBox="0 0 16 16">
+                                            <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z" />
+                                        </svg>
+                                        @Html.DisplayFor(modelItem => item.TicketCategory)
+                                    </div>
 
-                        <div class="text-secondary">
-                            <label>
-                                Assigned to
-                            </label>
-                            <span>
-                                @Html.DisplayFor(modelItem => item.TicketOwner)
-                            </span>
-                        </div>
-                        <label class="font-weight-bold m-0">Change </label>
-                        <div class="my-2 form-inline">
-                            <form method="POST" class="d-flex">
-                                <input type="hidden" asp-for="TicketActivity" value="1" />
-                                <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                <button type="submit" class="btn btn-sm btn-warning text-white d-flex">Open Ticket</button>
+                                    <div class="text-secondary">
+                                        <label>
+                                            Assigned to
+                                        </label>
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.TicketOwner)
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                                    </div>
+                                </div>
                             </form>
-                            <form method="POST" class="d-flex ml-2">
-                                <input type="hidden" asp-for="TicketActivity" value="2" />
-                                <input type="hidden" asp-for="TicketID" value="@item.ID" />
-                                <button type="submit" class="btn btn-sm btn-info text-white d-flex">In Progress</button>
-                            </form>
-                        </div>
-                        <div>
-                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                        </div>
-                    </div>
-                        }
+                         }
                     }
 
-                </div>
+                        </div>
             </div>
         </div>
     </div>
-    @*<script>
-        function AddInProgress(id) {
-            event.preventDefault();
-            $.ajax({
-                url: "/TicketDashboard/Edit?id=" + id,
-                type: "POST",
-                data: {activity: 2},
-                success: function () {
-                    alert("success");
-                },
-                complete: function () {
-                    alert("complete")
-                },
-                failure: function () {
-                    alert("failure");
-                }
-            });
+    <script>
+
+        //WHAT TO DO WHEN THE DRAG AND DROP STARTS
+        function dragStart(e) {
+
+            dragCard = e.target;
+            e.dataTransfer.dropEffect = "move";
+            dragCard.style.opacity = '0.5';
+            e.dataTransfer.setData("text/html", e.target.id);
+            console.log(e.target);
+
         }
 
-    </script>*@
+        // WHAT TO DO WHEN THE DRAG AND DROP ENDS
+        function dragEnd(e) {
+            dragCard = e.target;
+            dragCard.style.opacity = '1';
+        }
+
+        //WHAT TO DO WHEN DROPPING THE DRAGGED ITEM
+        function onDrop(e) {
+
+            e.stopPropagation();
+            e.preventDefault();
+            var data = e.dataTransfer.getData("text/html");
+            var cardData = document.getElementById(data);
+            var id = cardData.id;
+            var column = e.target;
+            var data = e.target.id;
+
+            // CHECK WHICH ACTIVITY IT IS BEING DROPED ON AND PRE APPEND TO THE COLUMN
+            if (column.id === "InProgress" || column.id === "OpenTicket" || column.id === "Complete") {
+
+                //PREPEND THE CARD TO THE ACTIVITY COLUMN 
+                column.prepend(cardData);
+
+                // CHANGE ACTIVITY FOR THE MOVED TICKET CARD WITHOUT REFRESHING PAGE
+                $.ajax({
+                    type: "POST",
+                    url: '/TicketDashboard',
+                    data: {
+                        id: id,
+                        activity: column.id
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "text",
+                    success: function (msg) {
+                        console.log("Success!");
+                    },
+                    
+                });
+
+            };
+
+        };
+
+        // WHAT TO DO WHEN DRAG AND DROP IS OVER A DRAGGABLE ITEM
+        function dragOver(e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+        };
+
+
+
+
+    </script>
 </div>
   
