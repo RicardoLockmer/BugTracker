@@ -4,14 +4,16 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BugTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619184607_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,17 +66,6 @@ namespace BugTracker.Data.Migrations
                             TicketDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TicketDecription = "the word counting for the max limit of characters on each field does not count properly",
                             TicketName = "Word Count not Working",
-                            TicketOwner = "Jane Doe"
-                        },
-                        new
-                        {
-                            ID = 998,
-                            TicketActivity = 2,
-                            TicketCategory = "Feature",
-                            TicketCreator = "John Doe",
-                            TicketDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TicketDecription = "Move around the columns and refresh to view that it saved changes with AJAX.",
-                            TicketName = "Drag me to another column",
                             TicketOwner = "Jane Doe"
                         });
                 });
